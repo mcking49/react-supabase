@@ -4,8 +4,13 @@
   "version": "0.0.0",
   "packageManager": "yarn@3.4.1",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
+    "dev": "vite",
+    "fix": "npm run prettier:fix; npm run lint:fix;",
+    "lint:fix": "npm run lint -- --fix",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "prettier:fix": "npx prettier --write .",
+    "prettier": "npx prettier --check .",
     "preview": "vite preview"
   },
   "dependencies": {

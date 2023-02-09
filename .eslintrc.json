@@ -5,17 +5,9 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "import",
-    "@typescript-eslint",
-    "prettier",
-    "chakra-ui"
-  ],
+  "plugins": ["import", "@typescript-eslint", "prettier", "chakra-ui"],
   "rules": {
-    "semi": [
-      "warn",
-      "never"
-    ],
+    "semi": ["warn", "never"],
     "chakra-ui/props-order": "error",
     "chakra-ui/props-shorthand": "error",
     "chakra-ui/require-specific-component": "error",
