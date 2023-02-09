@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Editor directories and files
 .idea
 .DS_Store
@@ -20,3 +28,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env
+.env.*
+!.env.example
