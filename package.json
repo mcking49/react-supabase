@@ -7,6 +7,7 @@
     "build": "tsc && vite build",
     "dev": "vite",
     "fix": "npm run prettier:fix; npm run lint:fix;",
+    "gen-types:local": "npx supabase gen types typescript --local > ./src/database.types.ts",
     "lint:fix": "npm run lint -- --fix",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prettier:fix": "npx prettier --write .",
