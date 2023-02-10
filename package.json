@@ -12,6 +12,7 @@
     "prettier:fix": "npx prettier --write .",
     "prettier": "npx prettier --check .",
     "preview": "vite preview",
+    "restart:db": "npx supabase stop; npx supabase start",
     "watch:css": "npx tailwindcss -i ./src/index.css -o ./dist/output.css --watch"
   },
   "dependencies": {
