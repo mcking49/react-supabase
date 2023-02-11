@@ -4,7 +4,7 @@ import AllPosts from './AllPosts'
 import Layout from './Layout'
 import MessageBoard from './MessageBoard'
 import PostView from './PostView'
-import Welcome from './Welcome'
+import Welcome, { welcomeLoader } from './Welcome'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       {
         path: 'welcome',
         element: <Welcome />,
+        loader: welcomeLoader,
       },
     ],
   },

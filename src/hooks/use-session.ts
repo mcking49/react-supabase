@@ -1,6 +1,8 @@
 import { RealtimeChannel, Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { setReturnPath } from '../components/Login'
 import { supaClient } from '../supa-client'
 
 export interface UserProfile {
@@ -20,6 +22,7 @@ export const useSession = (): SupashipUserInfo => {
   })
 
   const [channel, setChannel] = useState<RealtimeChannel | null>(null)
+  const navigate = useNavigate()
 
   const listenToUserProfileChanges = async (userId: string): Promise<RealtimeChannel> => {
     const { data } = await supaClient
@@ -29,6 +32,9 @@ export const useSession = (): SupashipUserInfo => {
 
     if (data?.[0]) {
       setUserInfo((prev) => ({ ...prev, profile: data[0] as unknown as UserProfile }))
+    } else {
+      setReturnPath()
+      navigate('./welcome')
     }
 
     return supaClient
