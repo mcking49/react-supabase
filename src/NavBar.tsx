@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import { Login } from './components/Login'
+import UserMenu from './components/UserMenu'
 import { useUser } from './hooks/use-user'
 
 const NavBar = () => {
@@ -22,9 +24,7 @@ const NavBar = () => {
             message board
           </Link>
         </li>
-        <li className="nav-auth-item">
-          {session?.user ? 'user is logged in' : 'user is logged out'}
-        </li>
+        <li className="nav-auth-item">{session?.user ? <UserMenu /> : <Login />}</li>
       </ul>
     </nav>
   )
