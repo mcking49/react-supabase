@@ -1,6 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useUser } from '../hooks/use-user'
 
 import { UserContext } from './App'
 import { castVote } from './cast-vote'
@@ -50,12 +49,14 @@ export async function getPostDetails({
   if (error || !data || data.length === 0) {
     throw new Error('Post not found')
   }
-  const postMap = (data as GetSinglePostWithCommentResponse[]).reduce((acc, post) => {
+  const postMap = (data as unknown as GetSinglePostWithCommentResponse[]).reduce((acc, post) => {
     acc[post.id] = post
     return acc
   }, {} as Record<string, Post>)
   const post = postMap[postId]
-  const comments = (data as GetSinglePostWithCommentResponse[]).filter((x) => x.id !== postId)
+  const comments = (data as unknown as GetSinglePostWithCommentResponse[]).filter(
+    (x) => x.id !== postId
+  )
   if (!userContext.session?.user) {
     return { post, comments }
   }
@@ -215,7 +216,7 @@ function CommentView({
 }) {
   const score = usePostScore(comment.id, comment.score)
   const [commenting, setCommenting] = useState(false)
-  const { session } = useUser()
+  const { session } = useContext(UserContext)
   return (
     <>
       <div className="post-detail-comment-container" data-e2e={`comment-${comment.id}`}>
@@ -303,7 +304,7 @@ function CreateComment({
   onCancel?: () => void
   onSuccess: () => void
 }) {
-  const user = useUser()
+  const user = useContext(UserContext)
   const [comment, setComment] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   return (

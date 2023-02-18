@@ -1,10 +1,12 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createContext } from 'react'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 
-import AllPosts from './AllPosts'
-import Layout from './Layout'
+import { AllPosts } from './AllPosts'
 import MessageBoard from './MessageBoard'
-import PostView from './PostView'
-import Welcome, { welcomeLoader } from './Welcome'
+import NavBar from './NavBar'
+import { PostView } from './Post'
+import { SupashipUserInfo, useSession } from './use-session'
+import { Welcome, welcomeLoader } from './Welcome'
 
 const router = createBrowserRouter([
   {
@@ -34,8 +36,23 @@ const router = createBrowserRouter([
   },
 ])
 
+export const UserContext = createContext<SupashipUserInfo>({
+  session: null,
+  profile: null,
+})
+
 function App() {
   return <RouterProvider router={router} />
+}
+
+function Layout() {
+  const supashipUserInfo = useSession()
+  return (
+    <UserContext.Provider value={supashipUserInfo}>
+      <NavBar />
+      <Outlet />
+    </UserContext.Provider>
+  )
 }
 
 export default App

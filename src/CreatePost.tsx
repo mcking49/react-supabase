@@ -1,11 +1,11 @@
 import { Session } from '@supabase/supabase-js'
-import { FC, useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 
-import { useUser } from '../hooks/use-user'
-import { supaClient } from '../supa-client'
+import { UserContext } from './App'
+import { supaClient } from './supa-client'
 
-interface CreatePostProps {
-  newPostCreated: () => void
+export interface CreatePostProps {
+  newPostCreated?: () => void
 }
 
 function createNewPost({
@@ -24,13 +24,12 @@ function createNewPost({
   })
 }
 
-const CreatePost: FC<CreatePostProps> = ({ newPostCreated }) => {
-  const { session } = useUser()
+export function CreatePost({ newPostCreated = () => {} }: CreatePostProps) {
+  const { session } = useContext(UserContext)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const titleInputRef = useRef<HTMLInputElement>(null)
   const contentInputRef = useRef<HTMLTextAreaElement>(null)
-
   return (
     <>
       <form
@@ -44,17 +43,18 @@ const CreatePost: FC<CreatePostProps> = ({ newPostCreated }) => {
             } else {
               setTitle('')
               setContent('')
-
-              if (titleInputRef.current) titleInputRef.current.value = ''
-              if (contentInputRef.current) contentInputRef.current.value = ''
-
+              if (titleInputRef.current) {
+                titleInputRef.current.value = ''
+              }
+              if (contentInputRef.current) {
+                contentInputRef.current.value = ''
+              }
               newPostCreated()
             }
           })
         }}
       >
-        <h3>Create A new Post</h3>
-
+        <h3>Create A New Post</h3>
         <input
           type="text"
           name="title"
@@ -65,7 +65,6 @@ const CreatePost: FC<CreatePostProps> = ({ newPostCreated }) => {
             setTitle(value)
           }}
         />
-
         <textarea
           name="contents"
           ref={contentInputRef}
@@ -75,7 +74,6 @@ const CreatePost: FC<CreatePostProps> = ({ newPostCreated }) => {
             setContent(value)
           }}
         />
-
         <div>
           <button type="submit" className="create-post-submit-button">
             Submit
@@ -85,5 +83,3 @@ const CreatePost: FC<CreatePostProps> = ({ newPostCreated }) => {
     </>
   )
 }
-
-export default CreatePost
